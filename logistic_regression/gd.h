@@ -14,7 +14,7 @@ public:
     :yv(y), alpha(0.03)
     {
         m = x.size();
-        w_vector = Eigen::MatrixXf::Constant(123,1,0.6);
+        w_vector = Eigen::MatrixXf::Constant(123,1,0.55);
         for(auto v : x)
         {
             Vector_type one = Eigen::MatrixXf::Constant(123,1,0);
@@ -29,7 +29,7 @@ public:
     void update_grad();
     void validate(vector< vector<int>> &x, vector<int> &y);
     void save(string model_path="logistic.model");
-    void load(string mode_path="logistic.model");
+    bool load(string mode_path="logistic.model");
     void sgd();
 private:    
     double alpha;
@@ -129,15 +129,23 @@ void Gradient_descent::validate(vector< vector<int>> &x, vector<int> &y)
 }
 void Gradient_descent::save(string model_path)
 {
-    ofstream out("logistic.model");
-    out<<w_vector<<"hhh";
+    ofstream out(model_path);
+    out<<w_vector.transpose();
     out.close();
 }
-void Gradient_descent::load(string model_path)
+bool Gradient_descent::load(string model_path)
 {
-
+    ifstream in(model_path);
+    if( in.good())
+    {
+        double number;
+        size_t cnt=0;
+        while(in>>number)w_vector[cnt++]=number;
+        return true;
+    }
+    else
+        return false;        
 }
-
 void Gradient_descent::sgd()
 {
 }
