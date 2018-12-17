@@ -1,4 +1,5 @@
 #include<cmath>
+#include<fstream>
 #include<iostream>
 #include<vector>
 #include <Eigen/Dense>
@@ -126,11 +127,13 @@ void Gradient_descent::validate(vector< vector<int>> &x, vector<int> &y)
         cout<<predit<<" "<<y[i]<<endl;
     }
 }
-void Gradient_descent::save(string model_path="logistic.model")
+void Gradient_descent::save(string model_path)
 {
-
+    ofstream out("logistic.model");
+    out<<w_vector<<"hhh";
+    out.close();
 }
-void Gradient_descent::load(string model_path="logistic.model")
+void Gradient_descent::load(string model_path)
 {
 
 }
