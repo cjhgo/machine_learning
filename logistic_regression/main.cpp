@@ -12,10 +12,16 @@ using namespace std;
 int main(int argc, char const *argv[])
 {   
     string fname="./uci/adult/adult.1.train";
-    vector<int> yv;
-    vector< vector<int> > instances;
+    vector<int> yv, yv_test;
+    vector< vector<int> > instances, instances_test;
     read_data(fname, yv, instances);
+    read_data("./uci/adult/adult.test", yv_test, instances_test);
+    assert(yv.size() == instances.size());
     Gradient_descent gd(instances, yv);
-    gd.show_data();
+    //gd.show_data();
+    gd.update_grad();
+    gd.show_model();
+    gd.save();
+    gd.validate(instances_test, yv_test);
     return 0;
 }
