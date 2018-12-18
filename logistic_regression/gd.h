@@ -3,23 +3,23 @@
 #include<iostream>
 #include<vector>
 #include <Eigen/Dense>
-
-typedef Eigen::Matrix< float , 123, 1> Vector_type;
-typedef Eigen::Matrix< float , 123, 1> Weight_type;
+#define FEATURE 124
+typedef Eigen::Matrix< float , FEATURE, 1> Vector_type;
+typedef Eigen::Matrix< float , FEATURE, 1> Weight_type;
 using namespace std;
 class Gradient_descent
 {
 public:
-    Gradient_descent(vector< vector<int>> &x, vector<int> &y)
-    :yv(y), alpha(0.03)
+    Gradient_descent(vector< vector<int>> &x, vector<int> &y, double arg=0.099)
+    :yv(y), alpha(arg)
     {
         m = x.size();
-        w_vector = Eigen::MatrixXf::Constant(123,1,0.55);
+        w_vector = Eigen::MatrixXf::Constant(FEATURE,1,0.55);
         for(auto v : x)
         {
-            Vector_type one = Eigen::MatrixXf::Constant(123,1,0);
+            Vector_type one = Eigen::MatrixXf::Constant(FEATURE,1,0);
             for(auto e: v)
-            one[e]=1;
+            one[e]=1;            
             instances.push_back(one);
         }
     }    
@@ -55,8 +55,10 @@ double Gradient_descent::logistic(Vector_type v)
 double Gradient_descent::cost_at_v(Vector_type v, int y)
 {
     double pred = logistic(v);
-    double sum = -1*y*std::log(pred)-(1-y)*std::log(1-pred);
-    return sum;
+    if(y == 1)
+    return -1*std::log(pred); 
+    else if(y == 0)
+    return -1*std::log(1-pred);
 }
 double Gradient_descent::calc_loss()
 {
@@ -89,17 +91,18 @@ double Gradient_descent::calc_grad(size_t j)
     double sum = 0;
     for(size_t i = 0; i < m; i++)
     {
-        sum += (logistic(instances[i])-yv[i])*(instances[i][j]);
+        double pred = logistic(instances[i]);
+        sum += (pred - yv[i])*(instances[i][j]);
     }
     return sum/m;
 }
 void Gradient_descent::update_grad()
 {
     size_t iter_count =0;
-    while(iter_count <= 100)
+    while(1 or iter_count <= 100)
     {
         Vector_type temp;
-        for(size_t j = 0; j < 123;j++)
+        for(size_t j = 0; j < FEATURE;j++)
         {
             double delta = alpha*calc_grad(j);
             w_vector[j] = w_vector[j] - delta;
@@ -116,16 +119,19 @@ void Gradient_descent::update_grad()
 }
 void Gradient_descent::validate(vector< vector<int>> &x, vector<int> &y)
 {   
-    size_t cnt=y.size(), err_cnt;
+    size_t cnt=y.size(), err_cnt=0;
     assert(cnt==x.size());
-    cnt = 20;
+    
+    double sum = 0;    
     for(size_t i = 0; i < cnt; i++)
     {        
-        Vector_type one = Eigen::MatrixXf::Constant(123,1,0);
+        Vector_type one = Eigen::MatrixXf::Constant(FEATURE,1,0);
         for(auto e: x[i])one[e]=1;
-        double predit = logistic(instances[i]);
-        cout<<predit<<" "<<y[i]<<endl;
+        sum += cost_at_v(one, y[i]);
+        int end_pred = logistic(one) > 0.5 ? 1 :0;
+        if( end_pred != y[i] ) err_cnt++;
     }
+    cout<<"the loss at test set: "<< sum/cnt<<endl<<err_cnt*1.0/cnt;
 }
 void Gradient_descent::save(string model_path)
 {

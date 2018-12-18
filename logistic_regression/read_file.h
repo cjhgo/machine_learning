@@ -18,18 +18,20 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
     while(getline(myfile, line))
     {
 
-        cout<<line<<endl;
+        // cout<<line<<endl;
         if( line.find("?") != string::npos)
         continue;        
         iss<<line;
         iss>>number;
+        if( number == -1) number = 0;
         yv.push_back(number);
+        v_line.push_back(0);
         while(iss>>index>>colon>>feature)
         {
             v_line.push_back(index);
-            cout<<index<<colon<<feature<<" ";
+            //cout<<index<<colon<<feature<<" ";
         }
-        cout<<endl;
+        //cout<<endl;
         vv.push_back(v_line);   
         v_line.clear();
         // iss<<line;
@@ -50,14 +52,14 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
         iss.clear();        
         // cout<<endl<<endl;
     }
-    cout<<endl;
-    for(auto e:yv)cout<<e<<" ";
-    cout<<endl;
-    for(auto v:vv)
-    {
-        for(auto e:v)cout<<e<<" ";
-        cout<<endl;
-    }
+    //cout<<endl;
+    // for(auto e:yv)cout<<e<<" ";
+    // cout<<endl;
+    // for(auto v:vv)
+    // {
+    //     for(auto e:v)cout<<e<<" ";
+    //     cout<<endl;
+    // }
     
 }
 
