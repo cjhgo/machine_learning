@@ -11,7 +11,7 @@ using namespace std;
 #include"gd.h"
 int main(int argc, char const *argv[])
 {   
-    string fname="./uci/adult/adult.1.train";
+    string fname="./uci/adult/adult.train";
     vector<int> yv, yv_test;
     vector< vector<int> > instances, instances_test;
     read_data(fname, yv, instances);
@@ -23,8 +23,7 @@ int main(int argc, char const *argv[])
     {
         gd.update_grad();
     }
-    gd.update_grad();
-    //gd.show_data();
+    gd.show_data();
     gd.show_model();
     gd.save();
     gd.validate(instances_test, yv_test);

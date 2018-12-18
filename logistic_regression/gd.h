@@ -131,7 +131,8 @@ void Gradient_descent::validate(vector< vector<int>> &x, vector<int> &y)
         int end_pred = logistic(one) > 0.5 ? 1 :0;
         if( end_pred != y[i] ) err_cnt++;
     }
-    cout<<"the loss at test set: "<< sum/cnt<<endl<<err_cnt*1.0/cnt;
+    cout<<"the loss at test set: "<< sum/cnt<<endl
+        <<"the error rate is : "<<err_cnt*1.0/cnt;
 }
 void Gradient_descent::save(string model_path)
 {
