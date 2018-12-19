@@ -17,8 +17,6 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
 
     while(getline(myfile, line))
     {
-
-        // cout<<line<<endl;
         if( line.find("?") != string::npos)
         continue;        
         iss<<line;
@@ -29,42 +27,19 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
         while(iss>>index>>colon>>feature)
         {
             v_line.push_back(index);
-            //cout<<index<<colon<<feature<<" ";
         }
-        //cout<<endl;
         vv.push_back(v_line);   
         v_line.clear();
-        // iss<<line;
-        // cout<<iss.str()<<endl;
-        // iss>>number;
-        // // cout<<number<<"\t"<<space<<endl<<iss.str()<<endl;
-        // yv.push_back(number);
-        
-        // while(!iss.eof())
-        // {
-        //     iss>>index>>colon>>feature;
-        //     cout<<index<<"#"<<iss.tellp()<<" ";
-        //     v_line.push_back(index);
-        // }
-        // vv.push_back(v_line);
-        // v_line.clear();
-        iss.str("");
+        iss.str(std::string());
         iss.clear();        
-        // cout<<endl<<endl;
     }
-    //cout<<endl;
-    // for(auto e:yv)cout<<e<<" ";
-    // cout<<endl;
-    // for(auto v:vv)
-    // {
-    //     for(auto e:v)cout<<e<<" ";
-    //     cout<<endl;
-    // }
-    
+    /*output read result from the line
+    for(auto e:yv)cout<<e<<" ";
+    cout<<endl;
+    for(auto v:vv)
+    {
+        for(auto e:v)cout<<e<<" ";
+        cout<<endl;
+    }
+    */    
 }
-
-/**
- * eof 不好使
- * clear 不好使
- * flush 不好使
- * */

@@ -23,7 +23,6 @@ int main(int argc, char const *argv[])
     {
         gd.update_grad();
     }
-    gd.show_data();
     gd.show_model();
     gd.save();
     gd.validate(instances_test, yv_test);
