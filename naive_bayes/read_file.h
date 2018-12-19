@@ -20,13 +20,14 @@ void read_data(string fname, vector< vector<int> > &vv)
         continue;        
         iss<<line;
         iss>>number;
-        while(!iss.eof())
+        while(iss>>comma>>number)
         {
-            iss>>comma>>number;
+            
             v_line.push_back(number);
         }
         vv.push_back(v_line);
         v_line.clear();
         iss.clear();
+        iss.str(std::string());
     }
 }
