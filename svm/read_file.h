@@ -14,7 +14,7 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
     char space,colon;
     stringstream iss;
     vector<int> v_line;
-
+    size_t cnt=0;
     while(getline(myfile, line))
     {
         if( line.find("?") != string::npos)
@@ -30,5 +30,7 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
         v_line.clear();
         iss.str(std::string());
         iss.clear();        
+        cnt++;
+        if( cnt == 500)break;
     }
 }
