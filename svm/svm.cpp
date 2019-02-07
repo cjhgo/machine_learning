@@ -124,6 +124,12 @@ void SVM_SMO::SMO()
         //sum += (alpha[j]*yv[j]*instances[j]);
         w_vector+= (alpha[j]*yv[j]*instances[j]);
     }
+    cout<<"after smo, the alpha vector is:\n";
+    for(auto e : alpha)cout<<e<<"\t";
+    cout<<endl<<endl<<"the weight and b is :\n";
+    for(size_t i = 0; i < 123; i++)cout<<w_vector[i]<<"\t";
+    cout<<endl<<b<<endl<<endl;
+
 }
 
 void SVM_SMO::validate(vector< vector<int>> &x, vector<int> &y,size_t sn)
