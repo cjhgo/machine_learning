@@ -116,6 +116,7 @@ void SVM_SMO::SMO()
                 }
             }
         }
+        passes++;
     }      
     //Vector_type sum=Eigen::MatrixXf::Constant(FEATURE,1,0);
     for(size_t j = 0; j < m;j++)
