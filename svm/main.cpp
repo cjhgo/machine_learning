@@ -18,5 +18,7 @@ int main(int argc, char const *argv[])
     read_data("./uci/adult/adult.test", yv_test, instances_test);
     assert(yv.size() == instances.size());
     SVM_SMO svm(instances, yv, instances.size());
+    svm.SMO();
+    svm.validate(instances_test, yv_test, instances_test.size());
     return 0;
 }
