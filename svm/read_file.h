@@ -31,6 +31,6 @@ void read_data(string fname, vector<int> &yv, vector< vector<int> > &vv)
         iss.str(std::string());
         iss.clear();        
         cnt++;
-        if( cnt == 500)break;
+        if( cnt == 300)break;
     }
 }

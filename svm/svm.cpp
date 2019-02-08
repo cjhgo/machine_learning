@@ -13,8 +13,9 @@ using namespace std;
 class SVM_SMO
 {
 public:
-    SVM_SMO(vector< vector<int>> &x, vector<int> &y,size_t  sn)
-    :yv(y),m(sn),C(1),G_vector(sn,0),E_vector(sn,0),alpha(sn,0),b(0),tolerance(0.03)
+    SVM_SMO(vector< vector<int>> &x, vector<int> &y,size_t  sn,int passes)
+    :yv(y),m(sn),C(1),b(0),tolerance(0.03),passes(passes),
+    G_vector(sn,0),E_vector(sn,0),alpha(sn,0)
     {
         w_vector = Eigen::MatrixXf::Constant(FEATURE,1,0);
         for(auto v : x)
@@ -42,7 +43,7 @@ private:
     float b,tolerance;
     vector<Vector_type> instances;
     vector<int> yv;    
-    int m,C;
+    int m,C,passes;
 };
 void SVM_SMO::updaetGi(size_t i)
 {
@@ -61,10 +62,10 @@ void SVM_SMO::updaetEi(size_t i)
 
 void SVM_SMO::SMO()
 {
-    size_t passes = 0;
-    while(passes < 100)
+    size_t iter = 0;
+    while(iter < passes)
     {
-        cout<<"round "<<passes<<"begin!\n";
+        cout<<"round "<<iter<<"begin!\n";
         for(size_t i = 0; i < m; i++)
         {
             if( 
@@ -116,7 +117,7 @@ void SVM_SMO::SMO()
                 }
             }
         }
-        passes++;
+        iter++;
     }      
     //Vector_type sum=Eigen::MatrixXf::Constant(FEATURE,1,0);
     for(size_t j = 0; j < m;j++)
