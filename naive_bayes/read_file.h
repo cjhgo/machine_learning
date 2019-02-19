@@ -21,8 +21,7 @@ void read_data(string fname, vector< vector<int> > &vv)
         iss<<line;
         iss>>number;
         while(iss>>comma>>number)
-        {
-            
+        {            
             v_line.push_back(number);
         }
         vv.push_back(v_line);
